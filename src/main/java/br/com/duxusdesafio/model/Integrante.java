@@ -8,6 +8,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "integrante")
 public class Integrante {
+
+	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +40,8 @@ public class Integrante {
 		this.funcao = funcao;
 		this.composicaoTime = composicaoTime;
 	}
+
+	
 
 	public long getId() {
 		return id;
