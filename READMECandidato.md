@@ -7,7 +7,6 @@ Via Maven:
 
 mvn spring-boot:run
 
-
 ### Rotas para Testar
 Método	Endpoint	Parâmetros	Descrição
 GET	/timeDaData	data=YYYY-MM-DD	Retorna o time com integrantes na data especificada
