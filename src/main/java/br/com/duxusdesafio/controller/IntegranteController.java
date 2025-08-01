@@ -33,26 +33,26 @@ public class IntegranteController {
 
     @Autowired
     private ApiService apiService;
- 
-    @GetMapping("/Integrantes")
+
+    @GetMapping("/integrantes")
     public ResponseEntity getall() {
-         System.out.println(">>> Resultado da contagem: " );
+        System.out.println(">>> Resultado da contagem: ");
         List<Integrante> listIntegrantes = repository.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(listIntegrantes);
     }
 
-    @PostMapping("/CreateIntegrante")
+    @PostMapping("/createIntegrante")
     public ResponseEntity create(@RequestBody Integrante integrante) {
         Integrante savedIntegrante = repository.save(integrante);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedIntegrante);
     }
 
-    @GetMapping("/IntegranteMaisUsado")
+    @GetMapping("/integranteMaisUsado")
     public ResponseEntity<Integrante> integranteMaisUsado(
-        
+
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal) {
-                System.out.println(">>> Entrou no endpoint integranteMaisUsado");
+        System.out.println(">>> Entrou no endpoint integranteMaisUsado");
         List<Time> times = apiService.todosOsTimes();
         Integrante integrante = apiService.integranteMaisUsado(dataInicial, dataFinal, times);
 
@@ -63,41 +63,24 @@ public class IntegranteController {
         }
     }
 
-    @GetMapping("/funcao-mais-comum")
+    @GetMapping("/funcaoMaisComum")
     public ResponseEntity<String> funcaoMaisComum(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal
-    ) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal) {
         List<Time> times = apiService.todosOsTimes();
         String funcaoMaisComum = apiService.funcaoMaisComum(dataInicial, dataFinal, times);
 
-        if (funcaoMaisComum != null ) {
+        if (funcaoMaisComum != null) {
             return new ResponseEntity<>(funcaoMaisComum, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-     @GetMapping("/franquia-mais-comum")
-    public ResponseEntity<String> franquiaMaisComum(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal
-    ) {
-        List<Time> times = apiService.todosOsTimes();
-        String funcaoMaisComum = apiService.franquiaMaisFamosa(dataInicial, dataFinal, times);
-
-        if (funcaoMaisComum != null ) {
-            return new ResponseEntity<>(funcaoMaisComum, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/contagem-por-franquia")
+    @GetMapping("/contagemPorFranquia")
     public ResponseEntity<Map<String, Long>> contagemPorFranquia(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal
-    ) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal) {
         List<Time> times = apiService.todosOsTimes();
         Map<String, Long> contagemFranquias = apiService.contagemPorFranquia(dataInicial, dataFinal, times);
 
@@ -108,20 +91,13 @@ public class IntegranteController {
         }
     }
 
-
-
-     @GetMapping("/contagem-por-funcao")
+    @GetMapping("/contagemPorFuncao")
     public ResponseEntity<Map<String, Long>> contagemPorFuncao(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal
-    ) {
-        Map<String, Long> contagemFuncoes = apiService.contagemPorFuncao(dataInicial, dataFinal, apiService.todosOsTimes());
-
-        if (!contagemFuncoes.isEmpty()) {
-            return new ResponseEntity<>(contagemFuncoes, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal) {
+        Map<String, Long> contagemFuncoes = apiService.contagemPorFuncao(dataInicial, dataFinal,
+                apiService.todosOsTimes());
+        return ResponseEntity.ok(contagemFuncoes);
     }
 
 }

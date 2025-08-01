@@ -50,8 +50,7 @@ public class TimeController {
     @GetMapping("/timeMaisComum")
     public ResponseEntity<List<String>> timeMaisComum(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal
-    ) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal) {
         List<Time> times = apiService.todosOsTimes();
 
         List<String> timeMaisComum = apiService.timeMaisComum(dataInicial, dataFinal, times);
@@ -62,8 +61,5 @@ public class TimeController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-    
-    
 
 }
